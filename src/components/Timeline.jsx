@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, RotateCcw, Activity, Tractor, HelpCircle, Layers } from 'lucide-react';
-import audioManager from '../utils/audio';
 
 export default function Timeline() {
   const handleCardMouseMove = (e) => {
@@ -25,7 +24,6 @@ export default function Timeline() {
   const [sales, setSales] = useState(0);
 
   const handleCellClick = (index) => {
-    audioManager.playFX('click');
     setFarmCells(prev => {
       const next = [...prev];
       if (next[index] === 'empty') {
@@ -35,8 +33,6 @@ export default function Timeline() {
       } else if (next[index] === 'harvested') {
         next[index] = 'sold'; // Phase 3: Sold
         setSales(s => s + 150);
-        // Play success tone for the sale
-        setTimeout(() => audioManager.playFX('success'), 50);
       } else {
         next[index] = 'empty'; // Cycle back
       }
@@ -68,14 +64,12 @@ export default function Timeline() {
     setBars([...defaultBars]);
     setComparing([]);
     setSorted([]);
-    audioManager.playFX('click');
   };
 
   const startSort = async () => {
     if (isSorting) return;
     setIsSorting(true);
     sortingRef.current = true;
-    audioManager.playFX('click');
     let arr = [...bars];
     let n = arr.length;
     let tempSorted = [];
@@ -94,8 +88,6 @@ export default function Timeline() {
           arr[j] = arr[j + 1];
           arr[j + 1] = temp;
           setBars([...arr]);
-          // Sound effect on swap
-          audioManager.playFX('hover');
         }
       }
       // Add to sorted elements
@@ -105,8 +97,6 @@ export default function Timeline() {
 
     setComparing([]);
     setIsSorting(false);
-    // Success chime when fully sorted
-    audioManager.playFX('success');
   };
 
   // --- Experience 3: Automated Workflow Pipelines State ---
@@ -166,15 +156,14 @@ export default function Timeline() {
                   </div>
                   <div className="farm-grid">
                     {farmCells.map((status, idx) => (
-                       <button
-                         key={idx}
-                         className={`farm-cell ${status === 'seeded' || status === 'harvested' ? 'planted' : ''} ${status === 'sold' ? 'sold' : ''}`}
-                         onClick={() => handleCellClick(idx)}
-                         onMouseEnter={() => audioManager.playFX('hover')}
-                         title={`Status: ${status}. Click to cycle crop phase.`}
-                       >
-                         {getCellContent(status)}
-                       </button>
+                      <button
+                        key={idx}
+                        className={`farm-cell ${status === 'seeded' || status === 'harvested' ? 'planted' : ''} ${status === 'sold' ? 'sold' : ''}`}
+                        onClick={() => handleCellClick(idx)}
+                        title={`Status: ${status}. Click to cycle crop phase.`}
+                      >
+                        {getCellContent(status)}
+                      </button>
                     ))}
                   </div>
                   <p style={{ fontSize: '0.65rem', color: '#9ca3af', marginTop: '0.75rem', textAlign: 'center' }}>
@@ -212,7 +201,6 @@ export default function Timeline() {
                         className="sorting-btn" 
                         onClick={startSort} 
                         disabled={isSorting}
-                        onMouseEnter={() => audioManager.playFX('hover')}
                         style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
                       >
                         <Play size={10} /> Play
@@ -220,7 +208,6 @@ export default function Timeline() {
                       <button 
                         className="sorting-btn" 
                         onClick={resetVisualizer}
-                        onMouseEnter={() => audioManager.playFX('hover')}
                         style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
                       >
                         <RotateCcw size={10} /> Reset
@@ -269,8 +256,7 @@ export default function Timeline() {
                     </span>
                     <button 
                       className="sorting-btn" 
-                      onClick={() => { audioManager.playFX('click'); setPipelineActive(!pipelineActive); }}
-                      onMouseEnter={() => audioManager.playFX('hover')}
+                      onClick={() => setPipelineActive(!pipelineActive)}
                     >
                       {pipelineActive ? 'Pause Flow' : 'Resume Flow'}
                     </button>

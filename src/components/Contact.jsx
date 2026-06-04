@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Terminal, Send } from 'lucide-react';
-import audioManager from '../utils/audio';
 
 const GithubIcon = ({ size = 20 }) => (
   <svg viewBox="0 0 24 24" width={size} height={size} stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -34,7 +33,6 @@ export default function Contact() {
 
     setIsSending(true);
     setIsAirplaneFlying(true);
-    audioManager.playFX('airplane');
 
     try {
       const responsePromise = fetch("https://formsubmit.co/ajax/vc654810@gmail.com", {
@@ -60,7 +58,6 @@ export default function Contact() {
       const result = await response.json();
 
       if (response.ok) {
-        audioManager.playFX('success');
         setSendSuccess(true);
         setFormData({ name: '', email: '', message: '' });
       } else {
@@ -90,15 +87,7 @@ export default function Contact() {
             </div>
             <div className="contact-details">
               <h4>Direct Email</h4>
-              <p>
-                <a 
-                  href="mailto:vaibhavc3040@gmail.com"
-                  onMouseEnter={() => audioManager.playFX('hover')}
-                  onClick={() => audioManager.playFX('click')}
-                >
-                  vaibhavc3040@gmail.com
-                </a>
-              </p>
+              <p><a href="mailto:vaibhavc3040@gmail.com">vaibhavc3040@gmail.com</a></p>
             </div>
           </div>
 
@@ -108,15 +97,7 @@ export default function Contact() {
             </div>
             <div className="contact-details">
               <h4>Call / Text</h4>
-              <p>
-                <a 
-                  href="tel:+917414933040"
-                  onMouseEnter={() => audioManager.playFX('hover')}
-                  onClick={() => audioManager.playFX('click')}
-                >
-                  +91 7414933040
-                </a>
-              </p>
+              <p><a href="tel:+917414933040">+91 7414933040</a></p>
             </div>
           </div>
 
@@ -141,8 +122,6 @@ export default function Contact() {
                 rel="noreferrer" 
                 className="social-btn glass-panel"
                 title="GitHub Core Node"
-                onMouseEnter={() => audioManager.playFX('hover')}
-                onClick={() => audioManager.playFX('click')}
               >
                 <GithubIcon size={20} />
               </a>
@@ -152,8 +131,6 @@ export default function Contact() {
                 rel="noreferrer" 
                 className="social-btn glass-panel"
                 title="LinkedIn Core Node"
-                onMouseEnter={() => audioManager.playFX('hover')}
-                onClick={() => audioManager.playFX('click')}
               >
                 <LinkedinIcon size={20} />
               </a>
@@ -192,7 +169,6 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleInputChange}
-                  onFocus={() => audioManager.playFX('hover')}
                   className="hud-input"
                   placeholder="e.g. John Doe"
                   required
@@ -207,7 +183,6 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  onFocus={() => audioManager.playFX('hover')}
                   className="hud-input"
                   placeholder="e.g. client@domain.com"
                   required
@@ -221,7 +196,6 @@ export default function Contact() {
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  onFocus={() => audioManager.playFX('hover')}
                   rows="4"
                   className="hud-textarea"
                   placeholder="Enter message details here..."
@@ -235,7 +209,6 @@ export default function Contact() {
                 className="glow-btn"
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                 disabled={isSending}
-                onMouseEnter={() => audioManager.playFX('hover')}
               >
                 <Send size={14} /> Dispatch Stream
               </button>
@@ -252,12 +225,7 @@ export default function Contact() {
               <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', lineHeight: '1.5' }}>
                 Your message packets have been successfully encrypted and routed to remote base <strong className="text-neon-cyan">vc654810@gmail.com</strong>.
               </p>
-              <button 
-                className="sorting-btn" 
-                style={{ marginTop: '1.75rem', padding: '0.6rem 1.25rem' }} 
-                onClick={() => { audioManager.playFX('click'); setSendSuccess(false); }}
-                onMouseEnter={() => audioManager.playFX('hover')}
-              >
+              <button className="sorting-btn" style={{ marginTop: '1.75rem', padding: '0.6rem 1.25rem' }} onClick={() => setSendSuccess(false)}>
                 Establish Another Connection
               </button>
             </div>

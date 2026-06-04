@@ -3,7 +3,6 @@ import ThreeSphereCanvas from './ThreeSphereCanvas';
 import { Shield, Sparkles, FolderOpen, ArrowRight, Download, X } from 'lucide-react';
 import downloadResume from '../utils/downloadResume';
 import vaibhavImg from '../assets/vaibhav.png';
-import audioManager from '../utils/audio';
 
 export default function Hero() {
   const cardRef = useRef(null);
@@ -29,7 +28,6 @@ export default function Hero() {
 
   const handleHoloClick = async () => {
     if (isScanned) return;
-    audioManager.playFX('scan');
     setIsScanned(true);
     setScanStatus("SCANNING PAYLOAD...");
 
@@ -41,7 +39,6 @@ export default function Hero() {
 
     await new Promise((resolve) => setTimeout(resolve, 1500));
     // Trigger dossier popup
-    audioManager.playFX('success');
     setIsDossierOpen(true);
     
     // Auto reset scanner status
@@ -113,30 +110,17 @@ export default function Hero() {
           </div>
 
           <div className="hero-actions">
-            <button 
-              className="glow-btn" 
-              onClick={() => { audioManager.playFX('click'); handleScrollTo('experience'); }}
-              onMouseEnter={() => audioManager.playFX('hover')}
-            >
+            <button className="glow-btn" onClick={() => handleScrollTo('experience')}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <FolderOpen size={15} /> Explore Projects <ArrowRight size={14} />
               </span>
             </button>
-            <button 
-              className="glow-btn secondary" 
-              onClick={() => { audioManager.playFX('click'); downloadResume(); }}
-              onMouseEnter={() => audioManager.playFX('hover')}
-            >
+            <button className="glow-btn secondary" onClick={downloadResume}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <Download size={14} /> Resume CV
               </span>
             </button>
-            <button 
-              className="sorting-btn" 
-              style={{ padding: '0.75rem 1rem' }} 
-              onClick={() => { audioManager.playFX('click'); handleScrollTo('contact'); }}
-              onMouseEnter={() => audioManager.playFX('hover')}
-            >
+            <button className="sorting-btn" style={{ padding: '0.75rem 1rem' }} onClick={() => handleScrollTo('contact')}>
               Contact Base
             </button>
           </div>
@@ -153,7 +137,6 @@ export default function Hero() {
             className="holo-id-card glass-panel"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onMouseEnter={() => audioManager.playFX('hover')}
             style={{
               transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg) translateY(-10px)`,
               transition: 'transform 0.1s ease-out'
@@ -201,7 +184,6 @@ export default function Hero() {
             className={`holo-portrait-wrapper ${isScanned ? 'scanned' : ''}`}
             onMouseMove={handleHoloMouseMove}
             onMouseLeave={handleHoloMouseLeave}
-            onMouseEnter={() => audioManager.playFX('hover')}
             onClick={handleHoloClick}
             style={{
               transform: `rotateY(${holoTilt.x}deg) rotateX(${holoTilt.y}deg) scale(${holoTilt.x !== 0 || isScanned ? 1.15 : 1})`,
@@ -238,11 +220,7 @@ export default function Hero() {
             style={{ animation: 'zoomInHUD 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards' }}
           >
             {/* Close Button */}
-            <button 
-              className="dossier-close-btn" 
-              onClick={() => { audioManager.playFX('click'); setIsDossierOpen(false); }}
-              onMouseEnter={() => audioManager.playFX('hover')}
-            >
+            <button className="dossier-close-btn" onClick={() => setIsDossierOpen(false)}>
               <X size={18} />
             </button>
 
@@ -295,20 +273,12 @@ export default function Hero() {
               </div>
 
               <div className="dossier-footer-actions">
-                <button 
-                  className="glow-btn" 
-                  onClick={() => { audioManager.playFX('click'); setIsDossierOpen(false); downloadResume(); }}
-                  onMouseEnter={() => audioManager.playFX('hover')}
-                >
+                <button className="glow-btn" onClick={() => { setIsDossierOpen(false); downloadResume(); }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                     <Download size={14} /> Download Secure CV
                   </span>
                 </button>
-                <button 
-                  className="glow-btn secondary" 
-                  onClick={() => { audioManager.playFX('click'); setIsDossierOpen(false); handleScrollTo('contact'); }}
-                  onMouseEnter={() => audioManager.playFX('hover')}
-                >
+                <button className="glow-btn secondary" onClick={() => { setIsDossierOpen(false); handleScrollTo('contact'); }}>
                   Initiate Handshake
                 </button>
               </div>
