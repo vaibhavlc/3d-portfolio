@@ -1789,27 +1789,56 @@ body {
 
 /* Responsive adjustments for Dossier */
 @media (max-width: 768px) {
+  .dossier-overlay {
+    align-items: flex-start;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
   .dossier-card {
+    display: flex;
+    flex-direction: column;
     grid-template-columns: 1fr;
-    max-height: 85vh;
+    max-height: none;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    overflow: hidden;
   }
   
   .dossier-left {
-    min-height: 200px;
-    max-height: 260px;
+    min-height: 180px;
+    max-height: 220px;
+    height: 200px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
+  }
+  
+  .dossier-img {
+    height: 100%;
+    width: 100%;
+    object-position: center 20%;
   }
   
   .dossier-right {
-    padding: 1.75rem;
+    padding: 1.5rem;
     gap: 1rem;
+    overflow-y: visible;
   }
   
   .dossier-title {
-    font-size: 1.75rem;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    margin-bottom: 0.15rem;
+  }
+  
+  .dossier-subtitle {
+    margin-top: 0;
+    font-size: 0.75rem;
   }
   
   .dossier-stats-grid {
-    gap: 1rem;
+    gap: 0.75rem;
     padding: 0.75rem 0;
   }
   
